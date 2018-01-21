@@ -236,8 +236,10 @@ func (i *inst) output() {
 	}
 	waitWrite = append(waitWrite, '\n')
 
-	if _, err := logger.Write(waitWrite); err != nil {
-		Fatal("Cannot write log to file.")
+	if logger != nil {
+		if _, err := logger.Write(waitWrite); err != nil {
+			Fatal("Cannot write log to file.")
+		}
 	}
 
 	if PanicLevel == i.level || FatalLevel == i.level {
