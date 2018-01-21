@@ -3,7 +3,6 @@ package logging
 import (
 	"encoding/json"
 	"fmt"
-	"os"
 	"path/filepath"
 	"runtime"
 	"sort"
@@ -172,7 +171,6 @@ func (i *inst) Debug(str ...interface{}) {
 
 func (i *inst) output() {
 	var color int
-	var err error
 	var waitWrite []byte
 	if i.level < logLevel {
 		return
@@ -226,23 +224,26 @@ func (i *inst) output() {
 	}
 
 	msg := strings.TrimSuffix(strings.TrimPrefix(fmt.Sprint(i.msg...), "["), "]")
+
+	if len(msg) > 1024*10 {
+		msg = "msg is too long and cannot be display"
+	}
+
 	fmt.Printf("\x1b[%dm%s\x1b[0m[%s] %-40v %s\n", color, levelText, i.time, msg, output)
 
 	i.fields["level"] = i.level.String()
 	i.fields["msg"] = i.msg
-	if waitWrite, err = json.Marshal(i.fields); err != nil {
-		Fatal("Cannot convert fields to string.")
-		return
-	}
+	waitWrite, _ = json.Marshal(i.fields)
 	waitWrite = append(waitWrite, '\n')
 
 	if logger != nil {
 		if _, err := logger.Write(waitWrite); err != nil {
-			Fatal("Cannot write log to file.")
+			logger = nil
+			Error("Cannot write log to file.")
 		}
 	}
 
 	if PanicLevel == i.level || FatalLevel == i.level {
-		os.Exit(0)
+		panic(fmt.Sprintf("Something serious event occured."))
 	}
 }
