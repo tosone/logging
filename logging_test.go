@@ -127,3 +127,15 @@ func TestRotate(t *testing.T) {
 	Info("after setting info level")
 	WithFields(Fields{"test": "test"}).Info("after setting info level")
 }
+
+func BenchmarkInfo(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Info("info level")
+	}
+}
+
+func BenchmarkInfoFile(b *testing.B) {
+	for n := 0; n < b.N; n++ {
+		Info("write info level to file")
+	}
+}
