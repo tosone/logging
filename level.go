@@ -1,15 +1,20 @@
 package logging
 
-
 // Level log level
 type Level uint
 
 const (
+	// DebugLevel Debug level
 	DebugLevel Level = iota
+	// InfoLevel Info level
 	InfoLevel
+	// WarnLevel Warn Level
 	WarnLevel
+	// ErrorLevel Error Level
 	ErrorLevel
+	// FatalLevel Fatal level
 	FatalLevel
+	// PanicLevel Panic level
 	PanicLevel
 )
 
