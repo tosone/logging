@@ -1,4 +1,4 @@
-# logging
+# logging [![Build Status](https://travis-ci.org/tosone/logging.svg?branch=master)](https://travis-ci.org/tosone/logging) [![Coverage Status](https://coveralls.io/repos/github/tosone/logging/badge.svg?branch=master)](https://coveralls.io/github/tosone/logging?branch=master)
 ------
 
 Example Code:
