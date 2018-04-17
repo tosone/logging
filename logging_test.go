@@ -2,7 +2,6 @@ package logging
 
 import (
 	"crypto/rand"
-	"os"
 	"testing"
 )
 
@@ -68,17 +67,19 @@ func TestLevel_String(t *testing.T) {
 }
 
 func TestFileCannotBeWrite(t *testing.T) {
+	var gb = 1024 * 1024
+	var maxSize = 1
 	var conf = Config{
 		LogLevel:   DebugLevel,
 		Filename:   "test.log",
-		MaxSize:    1,
+		MaxSize:    maxSize,
 		MaxBackups: 2,
 		MaxAge:     30,
 		LocalTime:  true,
 		Compress:   true,
 	}
 	Setting(conf)
-	var arr = make([]byte, 1024*1024*4)
+	var arr = make([]byte, gb*maxSize)
 	rand.Read(arr)
 	Info(arr)
 }
@@ -127,26 +128,6 @@ func TestRotate(t *testing.T) {
 	Rotate()
 	Info("after setting info level")
 	WithFields(Fields{"test": "test"}).Info("after setting info level")
-}
-
-func TestWriteError(t *testing.T) {
-	var err error
-	var fileOutput = "test-error.log"
-	var conf = Config{
-		LogLevel:   DebugLevel,
-		Filename:   fileOutput,
-		MaxSize:    10,
-		MaxBackups: 2,
-		MaxAge:     30,
-		LocalTime:  true,
-		Compress:   true,
-	}
-	Setting(conf)
-	Info("before log file")
-	if err = os.Remove(fileOutput); err != nil {
-		t.Error(err)
-	}
-	Info("after remove log file")
 }
 
 func BenchmarkInfo(b *testing.B) {
