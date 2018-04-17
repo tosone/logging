@@ -2,6 +2,7 @@ package logging
 
 import (
 	"crypto/rand"
+	"os"
 	"testing"
 )
 
@@ -126,6 +127,26 @@ func TestRotate(t *testing.T) {
 	Rotate()
 	Info("after setting info level")
 	WithFields(Fields{"test": "test"}).Info("after setting info level")
+}
+
+func TestWriteError(t *testing.T) {
+	var err error
+	var fileOutput = "test-error.log"
+	var conf = Config{
+		LogLevel:   DebugLevel,
+		Filename:   fileOutput,
+		MaxSize:    10,
+		MaxBackups: 2,
+		MaxAge:     30,
+		LocalTime:  true,
+		Compress:   true,
+	}
+	Setting(conf)
+	Info("before log file")
+	if err = os.Remove(fileOutput); err != nil {
+		t.Error(err)
+	}
+	Info("after remove log file")
 }
 
 func BenchmarkInfo(b *testing.B) {
