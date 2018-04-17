@@ -232,7 +232,7 @@ func (i *inst) output() {
 	fmt.Printf("\x1b[%dm%s\x1b[0m[%s] %-40v %s\n", color, levelText, i.time, msg, output)
 
 	i.fields["level"] = i.level.String()
-	i.fields["msg"] = msg
+	i.fields["msg"] = strings.TrimSuffix(strings.TrimPrefix(fmt.Sprint(i.msg...), "["), "]")
 	waitWrite, _ = json.Marshal(i.fields)
 	waitWrite = append(waitWrite, '\n')
 
