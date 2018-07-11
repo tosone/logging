@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/fatih/color"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
@@ -44,14 +45,6 @@ func Setting(conf Config) {
 
 	logLevel = conf.LogLevel
 }
-
-const (
-	red    = 31
-	green  = 32
-	yellow = 33
-	blue   = 34
-	gray   = 37
-)
 
 // Fields ..
 type Fields map[string]interface{}
@@ -170,20 +163,20 @@ func (i *inst) Debug(str ...interface{}) {
 }
 
 func (i *inst) output() {
-	var color int
+	var colorFun func(...interface{}) string
 	var waitWrite []byte
 	if i.level < logLevel {
 		return
 	}
 	switch i.level {
 	case DebugLevel:
-		color = gray
+		colorFun = color.New(color.FgBlack).SprintFunc()
 	case WarnLevel:
-		color = yellow
+		colorFun = color.New(color.FgYellow).SprintFunc()
 	case ErrorLevel, FatalLevel, PanicLevel:
-		color = red
+		colorFun = color.New(color.FgRed).SprintFunc()
 	default:
-		color = blue
+		colorFun = color.New(color.FgBlue).SprintFunc()
 	}
 	levelText := strings.ToUpper(i.level.String())[0:4]
 	var output string
@@ -210,16 +203,16 @@ func (i *inst) output() {
 	sort.Strings(keys)
 
 	for _, key := range keys {
-		color := yellow
+		yellow := color.New(color.FgYellow).SprintFunc()
 		if key == "_line" || key == "_file" {
-			output += fmt.Sprintf(" \x1b[%dm%s\x1b[0m=%+v", color, key[1:], i.fields[key])
+			output += fmt.Sprintf(" %s=%+v", yellow(key[1:]), i.fields[key])
 		}
 	}
 
 	for _, key := range keys {
+		green := color.New(color.FgGreen).SprintFunc()
 		if key != "_line" && key != "_file" && key != "__time" {
-			color := green
-			output += fmt.Sprintf(" \x1b[%dm%s\x1b[0m=%+v", color, key, i.fields[key])
+			output += fmt.Sprintf(" %s=%+v", green(key), i.fields[key])
 		}
 	}
 
@@ -229,7 +222,7 @@ func (i *inst) output() {
 		msg = "msg is too long and cannot be display"
 	}
 
-	fmt.Printf("\x1b[%dm%s\x1b[0m[%s] %-40v %s\n", color, levelText, i.time, msg, output)
+	fmt.Printf("%s[%s] %-40v %s\n", colorFun(levelText), i.time, msg, output)
 
 	i.fields["level"] = i.level.String()
 	i.fields["msg"] = strings.TrimSuffix(strings.TrimPrefix(fmt.Sprint(i.msg...), "["), "]")
