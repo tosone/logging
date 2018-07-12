@@ -8,21 +8,37 @@ import (
 func TestInfo(t *testing.T) {
 	Info("info level")
 	WithFields(Fields{"test": "test"}).Info("info level")
+	Infof("info level")
+	Infof("info level: %d", 1)
+	WithFields(Fields{"test": "test"}).Infof("info level")
+	WithFields(Fields{"test": "test"}).Infof("info level: %d", 1)
 }
 
 func TestDebug(t *testing.T) {
 	Debug("debug level")
-	WithFields(Fields{"test": "test"}).Debug("info level")
+	WithFields(Fields{"test": "test"}).Debug("debug level")
+	Debugf("debug level")
+	Debugf("debug level: %d", 1)
+	WithFields(Fields{"test": "test"}).Debugf("debug level")
+	WithFields(Fields{"test": "test"}).Debugf("debug level: %d", 1)
 }
 
 func TestWarn(t *testing.T) {
 	Warn("warn level")
-	WithFields(Fields{"test": "test"}).Warn("info level")
+	WithFields(Fields{"test": "test"}).Warn("warn level")
+	Warnf("warn level")
+	Warnf("warn level: %d", 1)
+	WithFields(Fields{"test": "test"}).Warnf("warn level")
+	WithFields(Fields{"test": "test"}).Warnf("warn level: %d", 1)
 }
 
 func TestError(t *testing.T) {
 	Error("error level")
 	WithFields(Fields{"test": "test"}).Warn("error level")
+	Errorf("error level")
+	Errorf("error level: %d", 1)
+	WithFields(Fields{"test": "test"}).Errorf("error level")
+	WithFields(Fields{"test": "test"}).Errorf("error level: %d", 1)
 }
 
 func TestFatal(t *testing.T) {
@@ -32,7 +48,51 @@ func TestFatal(t *testing.T) {
 		}
 	}()
 	Fatal("fatal level")
-	WithFields(Fields{"test": "test"}).Fatal("info level")
+}
+
+func TestFatal1(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Fatal("fatal level")
+}
+
+func TestFatalf(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	Fatalf("fatal level")
+}
+
+func TestFatalf1(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	Fatalf("fatal level: %d", 1)
+}
+
+func TestFatalf2(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Fatalf("fatal level")
+}
+
+func TestFatalf3(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Fatalf("fatal level: %d", 1)
 }
 
 func TestUnknownLevel(t *testing.T) {
@@ -47,7 +107,51 @@ func TestPanic(t *testing.T) {
 		}
 	}()
 	Panic("panic level")
-	WithFields(Fields{"test": "test"}).Panic("info level")
+}
+
+func TestPanic1(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Panic("panic level")
+}
+
+func TestPanicf(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	Panicf("panic level")
+}
+
+func TestPanicf1(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	Panicf("panic level: %d", 1)
+}
+
+func TestPanicf2(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Panicf("panic level")
+}
+
+func TestPanicf3(t *testing.T) {
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("The code did not panic")
+		}
+	}()
+	WithFields(Fields{"test": "test"}).Panicf("panic level: %d", 1)
 }
 
 func TestLevel_String(t *testing.T) {
