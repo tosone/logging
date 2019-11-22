@@ -229,7 +229,9 @@ func TestRotate(t *testing.T) {
 		Compress:   true,
 	}
 	Setting(conf)
-	Rotate()
+	if r := Rotate(); r != nil {
+		t.Error(r)
+	}
 	Info("after setting info level")
 	WithFields(Fields{"test": "test"}).Info("after setting info level")
 }

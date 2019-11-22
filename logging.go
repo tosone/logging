@@ -16,8 +16,8 @@ import (
 var logger = new(lumberjack.Logger)
 
 // Rotate rotate the output log file
-func Rotate() {
-	logger.Rotate()
+func Rotate() error {
+	return logger.Rotate()
 }
 
 var logLevel Level
