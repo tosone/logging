@@ -28,6 +28,8 @@ func TestWarn(t *testing.T) {
 	WithFields(Fields{"test": "test"}).Warn("warn level")
 	Warnf("warn level")
 	Warnf("warn level: %d", 1)
+	Warningf("warn level")
+	Warningf("warn level: %d", 1)
 	WithFields(Fields{"test": "test"}).Warnf("warn level")
 	WithFields(Fields{"test": "test"}).Warnf("warn level: %d", 1)
 }
@@ -184,7 +186,10 @@ func TestFileCannotBeWrite(t *testing.T) {
 	}
 	Setting(conf)
 	var arr = make([]byte, gb*maxSize)
-	rand.Read(arr)
+	var err error
+	if _, err = rand.Read(arr); err != nil {
+		t.Error(err)
+	}
 	Info(arr)
 }
 
