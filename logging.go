@@ -362,6 +362,6 @@ func (i *Inst) output() {
 	}
 
 	if PanicLevel == i.level || FatalLevel == i.level {
-		panic(fmt.Sprintf("Something serious event occured."))
+		panic("Something serious event occured.")
 	}
 }

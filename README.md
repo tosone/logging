@@ -1,6 +1,6 @@
 # logging
 
-[![Server Build CI](https://github.com/tosone/logging/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/tosone/logging/actions/workflows/ci.yaml) [![codecov](https://codecov.io/gh/tosone/logging/branch/main/graph/badge.svg?token=Y0l7RHluoS)](https://codecov.io/gh/tosone/logging)
+[![CI](https://github.com/tosone/logging/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/tosone/logging/actions/workflows/ci.yaml) [![codecov](https://codecov.io/gh/tosone/logging/branch/main/graph/badge.svg?token=Y0l7RHluoS)](https://codecov.io/gh/tosone/logging)
 
 Example Code:
 
