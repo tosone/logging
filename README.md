@@ -1,6 +1,9 @@
-# logging [![Build Status](https://travis-ci.org/tosone/logging.svg?branch=master)](https://travis-ci.org/tosone/logging) [![Coverage Status](https://coveralls.io/repos/github/tosone/logging/badge.svg?branch=master)](https://coveralls.io/github/tosone/logging?branch=master)
+# logging
+
+[![Server Build CI](https://github.com/tosone/logging/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/tosone/logging/actions/workflows/ci.yaml) [![codecov](https://codecov.io/gh/tosone/logging/branch/main/graph/badge.svg?token=Y0l7RHluoS)](https://codecov.io/gh/tosone/logging)
 
 Example Code:
+
 ``` go
 package main
 
@@ -23,7 +26,8 @@ func main() {
 ```
 
 OutPut:
-```
+
+``` bash
 INFO[10:39:49.100] info level                                file=main.go line=12
 INFO[10:39:49.101] info level                                file=main.go line=13 field1=1 field2=123
 WARN[10:39:49.101] warn info                                 file=main.go line=14
