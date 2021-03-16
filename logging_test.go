@@ -14,6 +14,11 @@ func TestInfo(t *testing.T) {
 	WithFields(Fields{"test": "test"}).Infof("info level: %d", 1)
 }
 
+func TestFieldNoneString(t *testing.T) {
+	Info("info level")
+	WithFields(Fields{"test": true}).Info("info level")
+}
+
 func TestDebug(t *testing.T) {
 	Debug("debug level")
 	WithFields(Fields{"test": "test"}).Debug("debug level")
@@ -32,6 +37,10 @@ func TestWarn(t *testing.T) {
 	Warningf("warn level: %d", 1)
 	WithFields(Fields{"test": "test"}).Warnf("warn level")
 	WithFields(Fields{"test": "test"}).Warnf("warn level: %d", 1)
+}
+
+func TestWarning(t *testing.T) {
+	WithFields(Fields{"test": "test"}).Warningf("warn level")
 }
 
 func TestError(t *testing.T) {
